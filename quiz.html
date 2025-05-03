@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Quiz TikTok Rewards</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #000;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .quiz-box {
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .question {
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+
+    .options button {
+      display: block;
+      margin: 10px auto;
+      padding: 12px;
+      width: 80%;
+      background-color: #ff0050;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .progress-bar {
+      height: 20px;
+      width: 100%;
+      background-color: #333;
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 20px 0;
+    }
+
+    .progress {
+      height: 100%;
+      background-color: #00ffcc;
+      width: 0%;
+    }
+
+    .saldo {
+      font-size: 18px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="quiz-box">
+    <div class="question" id="question"></div>
+    <div class="options" id="options"></div>
+    <div class="progress-bar"><div class="progress" id="progress"></div></div>
+    <div class="saldo">Saldo: R$<span id="saldo">0</span></div>
+  </div>
+
+  <script>
+    const perguntas = Array.from({ length: 25 }, (_, i) => `Pergunta ${i + 1}: Qual sua escolha?`);
+    let atual = 0;
+    let saldo = 0;
+
+    function mostrarPergunta() {
+      if (atual >= perguntas.length) {
+        alert("Parabéns! Você atingiu o final do quiz.");
+        window.location.href = "saque.html"; // próximo passo
+        return;
+      }
+
+      document.getElementById("question").textContent = perguntas[atual];
+      const opcoes = ["Opção A", "Opção B", "Opção C"];
+      document.getElementById("options").innerHTML = "";
+      opcoes.forEach(op => {
+        const btn = document.createElement("button");
+        btn.textContent = op;
+        btn.onclick = () => responder();
+        document.getElementById("options").appendChild(btn);
+      });
+    }
+
+    function responder() {
+      saldo += 22;
+      atual++;
+      document.getElementById("saldo").textContent = saldo;
+      document.getElementById("progress").style.width = `${(atual / 25) * 100}%`;
+      mostrarPergunta();
+    }
+
+    mostrarPergunta();
+  </script>
+</body>
+</html>
